@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Synthesizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="synth-container">
+        <!-- Header -->
+        <header class="synth-header">
+            <h1>QUANTUM SYNTH</h1>
+            <div class="preset-controls">
+                <select id="presetSelect" class="preset-select">
+                    <option value="init">Init</option>
+                    <option value="bass">Bass</option>
+                    <option value="lead">Lead</option>
+                    <option value="pad">Pad</option>
+                    <option value="pluck">Pluck</option>
+                    <option value="brass">Brass</option>
+                </select>
+                <button class="btn-save" id="savePreset">Save</button>
+                <button class="btn-delete" id="deletePreset">Delete</button>
+            </div>
+            <div class="master-controls">
+                <div class="control-group">
+                    <label>Master</label>
+                    <input type="range" id="masterVolume" min="0" max="100" value="70" class="slider">
+                    <span class="value-display" id="masterVolumeValue">70</span>
+                </div>
+                <button class="btn-panic" id="panicBtn">PANIC</button>
+            </div>
+        </header>
+
+        <!-- Top Section: Visual Displays -->
+        <section class="display-section">
+            <div class="display-panel">
+                <h3>Oscilloscope</h3>
+                <canvas id="oscilloscope" width="300" height="150"></canvas>
+            </div>
+            <div class="display-panel">
+                <h3>Waveform</h3>
+                <canvas id="waveform" width="300" height="150"></canvas>
+            </div>
+            <div class="display-panel">
+                <h3>Spectrum</h3>
+                <canvas id="spectrum" width="300" height="150"></canvas>
+            </div>
+        </section>
+
+        <!-- Middle Section: Controls -->
+        <section class="controls-section">
+            <!-- Oscillators -->
+            <div class="control-panel oscillators-panel">
+                <h2>Oscillators</h2>
+                <div class="oscillators-grid">
+                    <div class="oscillator-controls" data-osc="0">
+                        <h3>OSC 1</h3>
+                        <div class="control-group">
+                            <label>Waveform</label>
+                            <select class="osc-waveform">
+                                <option value="sawtooth">Sawtooth</option>
+                                <option value="sine">Sine</option>
+                                <option value="square">Square</option>
+                                <option value="triangle">Triangle</option>
+                                <option value="noise">Noise</option>
+                            </select>
+                        </div>
+                        <div class="knob-container">
+                            <label>Volume</label>
+                            <div class="knob" data-param="volume" data-min="0" data-max="100" data-value="80" data-default="80">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">80</span>
+                            </div>
+                        </div>
+                        <div class="knob-container">
+                            <label>Detune</label>
+                            <div class="knob" data-param="detune" data-min="-100" data-max="100" data-value="0" data-default="0">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">0</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Octave</label>
+                            <select class="osc-octave">
+                                <option value="-2">-2</option>
+                                <option value="-1">-1</option>
+                                <option value="0" selected>0</option>
+                                <option value="1">+1</option>
+                                <option value="2">+2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="oscillator-controls" data-osc="1">
+                        <h3>OSC 2</h3>
+                        <div class="control-group">
+                            <label>Waveform</label>
+                            <select class="osc-waveform">
+                                <option value="square">Square</option>
+                                <option value="sine">Sine</option>
+                                <option value="sawtooth">Sawtooth</option>
+                                <option value="triangle">Triangle</option>
+                                <option value="noise">Noise</option>
+                            </select>
+                        </div>
+                        <div class="knob-container">
+                            <label>Volume</label>
+                            <div class="knob" data-param="volume" data-min="0" data-max="100" data-value="50">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">50</span>
+                            </div>
+                        </div>
+                        <div class="knob-container">
+                            <label>Detune</label>
+                            <div class="knob" data-param="detune" data-min="-100" data-max="100" data-value="-5">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">-5</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Octave</label>
+                            <select class="osc-octave">
+                                <option value="-2">-2</option>
+                                <option value="-1">-1</option>
+                                <option value="0" selected>0</option>
+                                <option value="1">+1</option>
+                                <option value="2">+2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="oscillator-controls" data-osc="2">
+                        <h3>OSC 3</h3>
+                        <div class="control-group">
+                            <label>Waveform</label>
+                            <select class="osc-waveform">
+                                <option value="sine">Sine</option>
+                                <option value="sawtooth">Sawtooth</option>
+                                <option value="square">Square</option>
+                                <option value="triangle">Triangle</option>
+                                <option value="noise">Noise</option>
+                            </select>
+                        </div>
+                        <div class="knob-container">
+                            <label>Volume</label>
+                            <div class="knob" data-param="volume" data-min="0" data-max="100" data-value="0">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">0</span>
+                            </div>
+                        </div>
+                        <div class="knob-container">
+                            <label>Detune</label>
+                            <div class="knob" data-param="detune" data-min="-100" data-max="100" data-value="5">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">5</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Octave</label>
+                            <select class="osc-octave">
+                                <option value="-2">-2</option>
+                                <option value="-1">-1</option>
+                                <option value="0" selected>0</option>
+                                <option value="1">+1</option>
+                                <option value="2">+2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter & Envelopes -->
+            <div class="filter-env-container">
+                <!-- Filter -->
+                <div class="control-panel filter-panel">
+                    <h2>Filter</h2>
+                    <div class="filter-controls">
+                        <div class="control-group">
+                            <label>Type</label>
+                            <select id="filterType">
+                                <option value="lowpass">Low Pass</option>
+                                <option value="highpass">High Pass</option>
+                                <option value="bandpass">Band Pass</option>
+                            </select>
+                        </div>
+                        <div class="knob-container">
+                            <label>Cutoff</label>
+                            <div class="knob" id="filterCutoff" data-param="cutoff" data-min="20" data-max="20000" data-value="2000" data-default="2000">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">2000</span>
+                            </div>
+                        </div>
+                        <div class="knob-container">
+                            <label>Resonance</label>
+                            <div class="knob" id="filterResonance" data-param="resonance" data-min="0" data-max="20" data-value="1" data-default="1">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">1</span>
+                            </div>
+                        </div>
+                        <div class="knob-container">
+                            <label>Env Amount</label>
+                            <div class="knob" id="filterEnvAmount" data-param="envAmount" data-min="0" data-max="100" data-value="50">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Envelopes -->
+                <div class="control-panel envelopes-panel">
+                    <h2>Envelopes</h2>
+                    <div class="envelopes-grid">
+                        <div class="envelope-controls">
+                            <h3>Amplitude</h3>
+                            <div class="env-knobs">
+                                <div class="knob-container">
+                                    <label>A</label>
+                                    <div class="knob" data-env="amp" data-param="attack" data-min="0" data-max="2" data-value="0.01">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.01</span>
+                                    </div>
+                                </div>
+                                <div class="knob-container">
+                                    <label>D</label>
+                                    <div class="knob" data-env="amp" data-param="decay" data-min="0" data-max="2" data-value="0.3">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.3</span>
+                                    </div>
+                                </div>
+                                <div class="knob-container">
+                                    <label>S</label>
+                                    <div class="knob" data-env="amp" data-param="sustain" data-min="0" data-max="1" data-value="0.7">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.7</span>
+                                    </div>
+                                </div>
+                                <div class="knob-container">
+                                    <label>R</label>
+                                    <div class="knob" data-env="amp" data-param="release" data-min="0" data-max="2" data-value="0.5">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="envelope-controls">
+                            <h3>Filter</h3>
+                            <div class="env-knobs">
+                                <div class="knob-container">
+                                    <label>A</label>
+                                    <div class="knob" data-env="filter" data-param="attack" data-min="0" data-max="2" data-value="0.1">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.1</span>
+                                    </div>
+                                </div>
+                                <div class="knob-container">
+                                    <label>D</label>
+                                    <div class="knob" data-env="filter" data-param="decay" data-min="0" data-max="2" data-value="0.3">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.3</span>
+                                    </div>
+                                </div>
+                                <div class="knob-container">
+                                    <label>S</label>
+                                    <div class="knob" data-env="filter" data-param="sustain" data-min="0" data-max="1" data-value="0.5">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.5</span>
+                                    </div>
+                                </div>
+                                <div class="knob-container">
+                                    <label>R</label>
+                                    <div class="knob" data-env="filter" data-param="release" data-min="0" data-max="2" data-value="0.5">
+                                        <div class="knob-indicator"></div>
+                                        <span class="knob-value">0.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LFO & Effects -->
+            <div class="lfo-effects-container">
+                <!-- LFO -->
+                <div class="control-panel lfo-panel">
+                    <h2>LFO</h2>
+                    <div class="lfo-controls">
+                        <div class="control-group">
+                            <label>Waveform</label>
+                            <select id="lfoWaveform">
+                                <option value="sine">Sine</option>
+                                <option value="square">Square</option>
+                                <option value="triangle">Triangle</option>
+                                <option value="sawtooth">Sawtooth</option>
+                            </select>
+                        </div>
+                        <div class="knob-container">
+                            <label>Rate</label>
+                            <div class="knob" id="lfoRate" data-param="rate" data-min="0.1" data-max="20" data-value="5">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">5</span>
+                            </div>
+                        </div>
+                        <div class="knob-container">
+                            <label>Depth</label>
+                            <div class="knob" id="lfoDepth" data-param="depth" data-min="0" data-max="100" data-value="0">
+                                <div class="knob-indicator"></div>
+                                <span class="knob-value">0</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Destination</label>
+                            <select id="lfoDestination">
+                                <option value="pitch">Pitch</option>
+                                <option value="filter">Filter</option>
+                                <option value="amplitude">Amplitude</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Effects -->
+                <div class="control-panel effects-panel">
+                    <h2>Effects</h2>
+                    <div class="effects-grid">
+                        <div class="effect-controls">
+                            <div class="effect-header">
+                                <h3>Distortion</h3>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" class="effect-toggle" data-effect="distortion">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="knob-container">
+                                <label>Drive</label>
+                                <div class="knob" data-effect="distortion" data-param="drive" data-min="1" data-max="100" data-value="10">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">10</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="effect-controls">
+                            <div class="effect-header">
+                                <h3>Chorus</h3>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" class="effect-toggle" data-effect="chorus">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="knob-container">
+                                <label>Rate</label>
+                                <div class="knob" data-effect="chorus" data-param="rate" data-min="0.1" data-max="10" data-value="1.5">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">1.5</span>
+                                </div>
+                            </div>
+                            <div class="knob-container">
+                                <label>Depth</label>
+                                <div class="knob" data-effect="chorus" data-param="depth" data-min="0" data-max="100" data-value="50">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="effect-controls">
+                            <div class="effect-header">
+                                <h3>Delay</h3>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" class="effect-toggle" data-effect="delay">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="knob-container">
+                                <label>Time</label>
+                                <div class="knob" data-effect="delay" data-param="time" data-min="0" data-max="1" data-value="0.3">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">0.3</span>
+                                </div>
+                            </div>
+                            <div class="knob-container">
+                                <label>Feedback</label>
+                                <div class="knob" data-effect="delay" data-param="feedback" data-min="0" data-max="0.9" data-value="0.3">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">0.3</span>
+                                </div>
+                            </div>
+                            <div class="knob-container">
+                                <label>Mix</label>
+                                <div class="knob" data-effect="delay" data-param="mix" data-min="0" data-max="100" data-value="30">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">30</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="effect-controls">
+                            <div class="effect-header">
+                                <h3>Reverb</h3>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" class="effect-toggle" data-effect="reverb">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="knob-container">
+                                <label>Size</label>
+                                <div class="knob" data-effect="reverb" data-param="size" data-min="0" data-max="100" data-value="50">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">50</span>
+                                </div>
+                            </div>
+                            <div class="knob-container">
+                                <label>Damping</label>
+                                <div class="knob" data-effect="reverb" data-param="damping" data-min="0" data-max="100" data-value="50">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">50</span>
+                                </div>
+                            </div>
+                            <div class="knob-container">
+                                <label>Mix</label>
+                                <div class="knob" data-effect="reverb" data-param="mix" data-min="0" data-max="100" data-value="25">
+                                    <div class="knob-indicator"></div>
+                                    <span class="knob-value">25</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Section: Keyboard -->
+        <section class="keyboard-section">
+            <div class="wheels-container">
+                <div class="wheel-control">
+                    <label>Pitch</label>
+                    <div class="pitch-wheel" id="pitchWheel">
+                        <div class="wheel-handle"></div>
+                    </div>
+                </div>
+                <div class="wheel-control">
+                    <label>Mod</label>
+                    <div class="mod-wheel" id="modWheel">
+                        <div class="wheel-handle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="keyboard-container">
+                <div id="keyboard" class="keyboard"></div>
+            </div>
+
+            <div class="arp-seq-container">
+                <div class="control-panel arp-panel">
+                    <h3>Arpeggiator</h3>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="arpToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <div class="control-group">
+                        <label>Pattern</label>
+                        <select id="arpPattern">
+                            <option value="up">Up</option>
+                            <option value="down">Down</option>
+                            <option value="updown">Up-Down</option>
+                            <option value="random">Random</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Rate (BPM)</label>
+                        <input type="number" id="arpRate" min="60" max="240" value="120" class="number-input">
+                    </div>
+                    <div class="control-group">
+                        <label>Octaves</label>
+                        <input type="number" id="arpOctaves" min="1" max="4" value="1" class="number-input">
+                    </div>
+                </div>
+
+                <div class="control-panel seq-panel">
+                    <h3>Sequencer</h3>
+                    <button class="btn-seq" id="seqPlayStop">Play</button>
+                    <div class="control-group">
+                        <label>BPM</label>
+                        <input type="number" id="seqBpm" min="60" max="240" value="120" class="number-input">
+                    </div>
+                    <div class="sequencer-grid" id="sequencerGrid"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
